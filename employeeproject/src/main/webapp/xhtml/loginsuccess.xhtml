@@ -1,0 +1,131 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:a4j="http://richfaces.org/a4j"
+ xmlns:rich="http://richfaces.org/rich">
+
+ <f:view>
+ <h:head>
+ 	<script src="jquery-1.6.4.js"></script>
+	<script type="text/javascript" >
+	$(document).ready(function()
+		{
+			$("h:selectBooleanCheckbox").click(function()
+					{
+						if($("h:selectBooleanCheckbox").is(":checked"))
+						{
+							$("#edit,#create").hide();
+							}
+						else
+							{
+							$("#edit,#create").show();
+							}
+						
+				});
+		});
+		
+	</script>
+ 
+ 
+ </h:head>
+ 
+ <h:outputStylesheet>
+ 		
+ 		
+        .rf-dt{
+        width:400px;
+        }
+        .acent{
+        text-align: center;
+        }
+        .username
+        {
+        	text-align: right;
+        }
+    </h:outputStylesheet>
+    
+ <h:body>
+ <rich:panel header="login">
+   <h:form  prependId="false" id="formnav">
+   		
+   		<div align="right">   		
+   		 <h:commandButton action="#{loginBean.logout}" value="Logout"  rendered="#{not  empty loginBean.loginTO.employee}" />
+   		 </div>	
+         <div align="left"> 
+         <h:panelGrid columns="2">
+	     <h:outputText value="username" />
+	     <h:outputText  id="username" value="#{loginBean.loginTO.username}"  />
+	     
+	      </h:panelGrid>    
+	      </div>    
+	     <h:commandButton  value="Employees Details"  rendered="#{loginBean.admin}">
+	     	<f:ajax event="click"  execute="@form" render=":paginationform"  listener="#{loginBean.findAllEmployee}"/>
+	     </h:commandButton>
+	    
+     
+     </h:form>
+     
+     
+ <!--     <h:dataTable id="employeedetail" value="#{loginBean.listEmployees}" var="employee" rendered="#{not emptyloginBean.listEmployees}" >
+     	
+     	 		<h:column>
+      			  		<f:facet name="header">firstName</f:facet>
+      			  		#{employee.firstName}      			  
+      			  </h:column>
+      			  
+      			  <h:column>
+      			  		<f:facet name="header">lastName</f:facet>
+      			  		#{employee.lastName}      			  
+      			  </h:column>
+      			     
+      			  <h:column>
+      			  		
+      			  </h:column> 
+      			  
+      			     
+     
+     
+     </h:dataTable> --> 
+     
+      
+    <h:form prependId="false" id="paginationform" >
+        <h:panelGrid columnClasses="acent" id="form" rendered="#{not empty loginBean.listEmployees}">
+            <rich:dataScroller for="table" maxPages="5" />
+            <rich:dataTable value="#{loginBean.listEmployees}" var="employee" id="table" rows="10">
+                
+                <rich:column>
+                	<f:facet name="header">
+                		<h:outputText value="Select" />
+                	</f:facet>
+                	<h:selectBooleanCheckbox name="check" value="#{employee.selectedEmployee}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">
+                        <h:outputText value="FirstName" />
+                    </f:facet>
+                    #{employee.firstName}
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">
+                        <h:outputText value="LastName" />
+                    </f:facet>
+                   #{employee.lastName}
+                </rich:column>
+                
+            </rich:dataTable>
+            <rich:dataScroller for="table" maxPages="5" />
+        </h:panelGrid>
+        
+        <h:commandButton actionListener="#{loginBean.delete}" value="Delete" id="delete"/>
+        <h:commandButton action="#{loginBean.edit}" value="Edit" id="edit"/>
+        <h:commandButton action="#{loginBean.add}" value="Add" id="add"/>
+    </h:form>     
+	
+	
+	</rich:panel>
+
+</h:body>
+
+</f:view>
+</ui:composition>

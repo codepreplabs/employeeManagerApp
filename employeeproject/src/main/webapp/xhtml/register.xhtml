@@ -1,0 +1,259 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:a4j="http://richfaces.org/a4j"
+ xmlns:rich="http://richfaces.org/rich">
+
+ <f:view>
+ <h:head>
+ 	<h:outputStylesheet name="style.css"  library="css" />
+ </h:head>
+ <h:body>
+
+ <rich:panel header="Employee form">
+ 	<h:message for="form"  styleClass="error"/>
+   <h:form id="form">
+   		<div align="right">   		
+   		 <h:commandButton action="#{loginBean.logout}" value="Logout"  rendered="#{not  empty loginBean.loginTO.employee}" />
+   		 </div>	
+   	<h:panelGrid columns="9">
+         
+     <h:outputText value="Enter FirstName" />
+     <h:inputText  id="firtname" value="#{employeeBean.employeeTO.firstName}" >
+        <rich:validator />
+     </h:inputText>
+     <rich:message for="firstName" />
+     
+     <h:outputText value="Enter MiddleName" />
+     <h:inputText  id="middleName" value="#{employeeBean.employeeTO.middleName}" >
+      <rich:validator />
+      </h:inputText>
+	<rich:message for="middleName" />
+
+	<h:outputText value="Enter lastname" />
+     <h:inputText id="lastname" value="#{employeeBean.employeeTO.lastName}">
+        <rich:validator />
+     </h:inputText>          
+     
+     
+     
+     <rich:message for="lastname" />
+     
+     </h:panelGrid>
+     
+    <h:panelGrid columns="6">
+     <h:outputText value="Enter UserName" />
+     <h:inputText id="username" value="#{employeeBean.employeeTO.userName}">
+        <rich:validator />
+     </h:inputText>     
+     <rich:message for="username" />
+     
+     
+     <h:outputText value="Enter Password"  />
+     <h:inputText id="password" value="#{employeeBean.employeeTO.password}">
+        <rich:validator />
+     </h:inputText>     
+     <rich:message for="password" /> 
+     
+     
+   
+      
+     
+     	
+     <h:outputText value="Enter Date of Birth" />
+     <rich:calendar id="dob" value="#{employeeBean.employeeTO.dob}" datePattern="dd/MM/yyy" />
+     <rich:message for="dob"/>
+     
+     <h:outputText value="Gender" />
+     <h:selectOneRadio  id="gender" value="#{employeeBean.employeeTO.gender}">
+     	<f:selectItem itemLabel="Male" itemValue="Male"/>
+     	<f:selectItem itemLabel="Female" itemValue="Female"/>
+     </h:selectOneRadio>
+     <rich:message for="gender" />	
+        	
+     
+     </h:panelGrid >
+     
+     <rich:panel header="Professional Detail">
+     
+     	<h:panelGrid columns="9">
+     		
+     		<h:outputText value="Department" />
+     		<h:inputText id="department" value="#{employeeBean.employeeTO.departmentSelected}" >
+     			<rich:validator/>
+     		</h:inputText>	
+     		<rich:message for="department"/>
+     		
+     		<h:outputText value="Role" />
+     		<h:inputText id="role" value="#{employeeBean.employeeTO.roleSelected}" >
+     			<rich:validator/>
+     		</h:inputText>	
+     		<rich:message for="role"/>
+     		
+     		
+     		<h:outputText value="Status" />
+     		<h:inputText id="status" value="#{employeeBean.employeeTO.statusSelected}" >
+     			<rich:validator/>
+     		</h:inputText>	
+     		<rich:message for="status"/>
+     	
+     	
+     	</h:panelGrid>
+         
+     </rich:panel>
+     
+     
+     
+	<rich:panel header="Address Detail">
+		<h:panelGrid columns="6">
+			<h:outputText value="Enter Permanent Addressline1" />
+		     <h:inputText id="permanentaddressline1" value="#{employeeBean.employeeTO.permanentAddressline1}">
+		        <rich:validator />
+		     </h:inputText>     
+		     <rich:message for="permanentaddressline1" />	
+		     
+		     <h:outputText value="Enter Temporay Addressline1" />
+		     <h:inputText id="temporaryAddressline1" value="#{employeeBean.employeeTO.temporaryAddressline1}">
+		        <rich:validator />
+		     </h:inputText>     
+		     <rich:message for="temporaryAddressline1" />	
+		     
+		     
+		     <h:outputText value="Enter Permanent Addressline2" />
+		     <h:inputText id="permanentaddressline2" value="#{employeeBean.employeeTO.permanentAddressline2}">
+		        <rich:validator />
+		     </h:inputText>     
+		     <rich:message for="permanentaddressline2" />
+		     
+		     <h:outputText value="Enter Temporay Addressline2" />
+		     <h:inputText id="temporaryAddressline2" value="#{employeeBean.employeeTO.temporaryAddressline2}">
+		        <rich:validator />
+		     </h:inputText>     
+		     <rich:message for="temporaryAddressline2" />	
+		     
+		     
+		     
+		    <h:outputText value="Country" />
+		     <h:selectOneMenu Lable="Country" id="country"  value="#{employeeBean.employeeTO.localCountry}" required="true" immediate="true" valueChangeListener="#{employeeBean.valueChangedCountry}" >
+			
+				<f:selectItems value="#{employeeBean.countries}"/>
+				<a4j:ajax event="change" render="state" execute="@this" />
+				
+			</h:selectOneMenu>		
+		     <rich:message for="country" /> 
+		     
+		  
+				
+		     	
+		     <h:outputText value="State"  />
+		     <h:selectOneMenu Lable="state" id="state" value="#{employeeBean.employeeTO.localeState}"  immediate="true" valueChangeListener="#{employeeBean.valueChangedState}">
+				<f:selectItems value="#{employeeBean.states}"/>
+				<a4j:ajax event="change" render="city" execute="@this" />
+			</h:selectOneMenu>    
+		     <rich:message for="state" />	
+		     
+		      <h:outputText value="City" />
+		     <h:selectOneMenu Lable="city" id="city" value="#{employeeBean.employeeTO.citySelected}"  immediate="true" >
+				<f:selectItems value="#{employeeBean.cities}"/>
+				<f:convertNumber type="number"/>
+			</h:selectOneMenu>   
+		     <rich:message for="city" />
+		     
+		      <h:outputText value="ZipCode" />
+		     <h:inputText id="zipcode" value="#{employeeBean.employeeTO.localZipcode}">
+		     <f:convertNumber type="number"/>
+		        <rich:validator />
+		     </h:inputText>     
+		     <rich:message for="zipcode" />	 		     
+		</h:panelGrid>
+	</rich:panel>
+     
+     <rich:panel header="Contact Number">
+     	<h:panelGrid columns="9">
+     		<h:outputText value="Moblie " />
+		     <h:inputText id="moblie" value="#{employeeBean.employeeTO.mobileNumber}">
+		        <rich:validator />
+		     </h:inputText>     
+		     <rich:message for="moblie" />
+     			
+     		 <h:outputText value="Landline" />
+		     <h:inputText id="landline" value="#{employeeBean.employeeTO.landlineNumber}">
+		        <rich:validator />
+		     </h:inputText>     
+		     <rich:message for="landline" />
+		     
+		     <h:outputText value="Office" />
+		     <h:inputText id="office" value="#{employeeBean.employeeTO.officeNumber}">
+		        <rich:validator />
+		     </h:inputText>     
+		     <rich:message for="office" />
+       	</h:panelGrid>
+     </rich:panel>
+     
+     <rich:panel header="Email-id">
+     	<h:panelGrid columns="6">
+     			<h:outputText value="Email-Id" />
+			     <h:inputText id="emailId" value="#{employeeBean.employeeTO.emailId}">
+			        <rich:validator />
+			     </h:inputText>     
+			     <rich:message for="emailId" />
+			     
+			     <h:outputText value="Alternate Email-Id" />
+			     <h:inputText id="alternateEmailId" value="#{employeeBean.employeeTO.alternateEmailId}">
+			        <rich:validator />
+			     </h:inputText>     
+			     <rich:message for="alternateEmailId" />
+     	</h:panelGrid>	
+     </rich:panel>
+   
+   <br/>
+   	
+   		<h:panelGrid columns="2" columnClasses="top,top">
+				<rich:fileUpload fileUploadListener="#{employeeBean.listener}"
+				maxFilesQuantity="1" id="upload"
+				acceptedTypes="jpg, gif, png, bmp" listHeight="1">
+				<a4j:ajax event="uploadcomplete" execute="@none" reRender="image" /> 
+				 
+				</rich:fileUpload>
+				<h:panelGroup id="info">
+					<rich:panel bodyClass="info"  >
+					<f:facet name="header"  >Uploaded Files Info</f:facet>
+							<rich:dataGrid columns="1" value="#{employeeBean.files}" var="file" rowKeyVar="row">
+								<rich:panel>
+									<h:panelGrid columns="2">
+										<a4j:mediaOutput element="img" mimeType="#{file.contentType}"
+										createContent="#{employeeBean.paint}" value="#{row}" style="width:100px;..
+										height:100px;"
+										cacheable="true">
+										<f:param value="#{employeeBean.timeStamp}" name="time" />
+										
+										</a4j:mediaOutput>
+										<h:panelGrid columns="2">
+										<h:outputText value="File Name:" />
+										<h:outputText value="#{file.name}" />
+										<h:outputText value="File Length(bytes):" />
+										<h:outputText value="#{file.size}" />
+						 				</h:panelGrid>			
+ 				 					</h:panelGrid>
+ 				 			</rich:panel>
+ 				 			
+			
+				</rich:dataGrid>
+			</rich:panel>
+			</h:panelGroup>
+			</h:panelGrid>
+			
+			<h:graphicImage  value="/image/imagesTO.jpg"  width="100" height="100" id="image" />
+			
+			
+   	<h:commandButton action="#{employeeBean.save}" value="Submit" rendered="#{not employeeBean.updating}" />
+     <h:commandButton action="#{employeeBean.update}" value="Update" rendered="#{employeeBean.updating}" />
+   </h:form>
+   
+ </rich:panel>
+
+ </h:body>
+ </f:view>
+</ui:composition>
+
